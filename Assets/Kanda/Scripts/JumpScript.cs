@@ -12,7 +12,7 @@ public class JumpScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isJumping)
@@ -22,7 +22,7 @@ public class JumpScript : MonoBehaviour
             Debug.Log("Jumping");
         }
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == groundTag)
