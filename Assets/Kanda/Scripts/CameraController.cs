@@ -11,11 +11,6 @@ public class CameraController : MonoBehaviour
     public float CamMAX_y;
     public float CamMIN_y;
     
-    void Start()
-    {
-        
-    }
-    
     void Update()
     {
         // マウスの動き
@@ -31,34 +26,22 @@ public class CameraController : MonoBehaviour
         // カメラ回転上限
         if (CamMIN_x > newRotation.x)
         {
-            if (newRotation.x > 180)
-            {
-                newRotation.x = CamMIN_x;
-            }
+            if (newRotation.x > 180) newRotation.x = CamMIN_x;
         }
 
         if (newRotation.x > CamMAX_x)
         {
-            if (180 > newRotation.x)
-            {
-                newRotation.x = CamMAX_x;
-            }
+            if (180 > newRotation.x) newRotation.x = CamMAX_x;
         }
 
         if (CamMIN_y > newRotation.y)
         {
-            if (newRotation.y > 180)
-            {
-                newRotation.y = CamMIN_y;
-            }
+            if (newRotation.y > 180) newRotation.y = CamMIN_y;
         }
 
         if (newRotation.y > CamMAX_y)
         {
-            if (180 > newRotation.y)
-            {
-                newRotation.y = CamMAX_y;
-            }
+            if (180 > newRotation.y) newRotation.y = CamMAX_y;
         }
         transform.localEulerAngles = newRotation;
     }
