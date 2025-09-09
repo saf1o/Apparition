@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MoveController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class MoveController : MonoBehaviour
     private GameObject camera;
     private Vector3 moveDirection;
     private CharacterController controller;
+    public bool GameOver;
     
     void Start()
     {
@@ -22,12 +24,12 @@ public class MoveController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
     
-    void Update()
+    void FixedUpdate()
     {
         KeySystem();
         StaminaBer();
-        Jump();
-
+        DontDestroyOnLoad();
+        // Jump();
     }
 
     private void KeySystem()
@@ -59,9 +61,10 @@ public class MoveController : MonoBehaviour
             transform.Rotate(0.0f, 1.0f, 0.0f);
 
         if (Input.GetKey(KeyCode.Space)) animator.SetBool("Run", true);
+        
         else animator.SetBool("Run", false);
     }
-
+    
     private void StaminaBer()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
@@ -74,12 +77,23 @@ public class MoveController : MonoBehaviour
         stamina_slider.value = stamina;
     }
 
-    private void Jump()
+    void DontDestroyOnLoad()
     {
-        if (controller.isGrounded)
-            if (Input.GetKeyDown("Jump")) moveDirection.y = jumpSpeed;
-        
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
+        if (GameOver == true)
+            SceneManager.LoadScene("GameOver");
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+            GameOver = true;
+    }
+    // private void Jump()
+    // {
+    //     if (controller.isGrounded)
+    //         if (Input.GetKeyDown("Jump")) moveDirection.y = jumpSpeed;
+    //     
+    //     moveDirection.y -= gravity * Time.deltaTime;
+    //     controller.Move(moveDirection * Time.deltaTime);
+    // }
 }
