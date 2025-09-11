@@ -1,35 +1,35 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MoveController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float gravity = 10f;
-    [SerializeField] private float jumpSpeed = 5f;
     [SerializeField] private float horizontalSpeed = 2.0f;
     [SerializeField] private float verticalSpeed = 2.0f;
 
     public float stamina;
     public Slider stamina_slider;
+    public bool GameOver;
+    public int Kay;
+    public TextMeshProUGUI kay_text;
+    
     private Animator animator;
     private GameObject camera;
     private Vector3 moveDirection;
-    private CharacterController controller;
-    public bool GameOver;
     
     void Start()
     {
-        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
     
-    void FixedUpdate()
+    void Update()
     {
         KeySystem();
         StaminaBer();
         DontDestroyOnLoad();
-        // Jump();
     }
 
     private void KeySystem()
@@ -81,6 +81,8 @@ public class MoveController : MonoBehaviour
     {
         if (GameOver == true)
             SceneManager.LoadScene("GameOver");
+
+        kay_text.text = "" + Kay + "/1";
     }
 
     void OnCollisionEnter(Collision collision)
@@ -88,12 +90,4 @@ public class MoveController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
             GameOver = true;
     }
-    // private void Jump()
-    // {
-    //     if (controller.isGrounded)
-    //         if (Input.GetKeyDown("Jump")) moveDirection.y = jumpSpeed;
-    //     
-    //     moveDirection.y -= gravity * Time.deltaTime;
-    //     controller.Move(moveDirection * Time.deltaTime);
-    // }
 }

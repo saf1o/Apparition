@@ -10,8 +10,12 @@ public class CameraController : MonoBehaviour
     public float CamMIN_x;
     public float CamMAX_y;
     public float CamMIN_y;
+
+    public MoveController Player;
+    public GameObject kay_text_set;
+    public GameObject target;
     
-    void Update()
+    void FixedUpdate()
     {
         // マウスの動き
         y_mouse = Input.GetAxis("Mouse Y");
@@ -44,5 +48,24 @@ public class CameraController : MonoBehaviour
             if (180 > newRotation.y) newRotation.y = CamMAX_y;
         }
         transform.localEulerAngles = newRotation;
+        
+        RaycastHit hit;
+    
+        if (Physics.SphereCast(gameObject.transform.position, 0.1f,
+                target.transform.forward, out hit, 5f))
+        {
+            if (hit.collider.gameObject.tag == "Kay")
+            {
+                kay_text_set.SetActive(true);
+                if (Input.GetMouseButton(0))
+                {
+                    Player.Kay += 1;
+                    Destroy(hit.collider.gameObject);
+                    kay_text_set.SetActive(false);
+                }
+            }
+            else kay_text_set.SetActive(false);
+        }
+        Debug.DrawRay(gameObject.transform.position, target.transform.forward * 10, Color.blue);
     }
 }
