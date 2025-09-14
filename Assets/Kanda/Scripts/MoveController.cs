@@ -55,10 +55,10 @@ public class MoveController : MonoBehaviour
         else animator.SetBool("Back", false);
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            transform.Rotate(0.0f, -1.0f, 0.0f);
+            transform.position -= transform.right * (speed * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) 
-            transform.Rotate(0.0f, 1.0f, 0.0f);
+            transform.position += transform.right * (speed * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.Space)) animator.SetBool("Run", true);
         
