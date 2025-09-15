@@ -55,4 +55,11 @@ public class CameraController : MonoBehaviour
         
         Debug.DrawRay(transform.position, transform.forward * 10, Color.blue);
     }
+
+    public void ResetCameraRotation()
+    {
+        rotationX = 0;
+        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        Debug.Log("CameraController: 回転リセット");
+    }
 }
