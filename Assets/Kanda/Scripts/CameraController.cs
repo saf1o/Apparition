@@ -18,6 +18,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Player Synchronization")] 
     public Transform playerTransform;
+    
     void Update()
     {
         // マウスの動き
@@ -45,15 +46,19 @@ public class CameraController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Player.Kay += 1;
+                    Debug.Log($"鍵取得　現在:{Player.Kay}個");
+                    if (Player.kay_text != null)
+                        Player.kay_text.text = "" + Player.Kay + "/1";
                     Destroy(hit.collider.gameObject);
                     kay_text_set.SetActive(false);
+                    
                 }
             }
             else kay_text_set.SetActive(false);
         }
         else kay_text_set.SetActive(false);
         
-        Debug.DrawRay(transform.position, transform.forward * 10, Color.blue);
+        Debug.DrawRay(transform.position, transform.forward * 5f, Color.blue);
     }
 
     public void ResetCameraRotation()

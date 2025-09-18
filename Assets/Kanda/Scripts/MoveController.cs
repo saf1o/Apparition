@@ -23,6 +23,12 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        if (GetComponent<Rigidbody>() == null)
+        {
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
     }
     
     void Update()

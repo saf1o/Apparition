@@ -1,7 +1,5 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class StartSceneManager : MonoBehaviour
 {
@@ -15,6 +13,6 @@ public class StartSceneManager : MonoBehaviour
 
     private void GoToStoryScene()
     {
-        SceneManager.LoadScene("2 Story");
+        SceneTransitionManager.TransitionToScene("2 Story");
     }
 }

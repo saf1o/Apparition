@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StorySceneManager : MonoBehaviour
 {
@@ -11,6 +10,6 @@ public class StorySceneManager : MonoBehaviour
 
     public void GoToInGameScene()
     {
-        SceneManager.LoadScene("3 InGame");
+        SceneTransitionManager.TransitionToScene("3 InGame");
     }
 }
