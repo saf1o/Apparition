@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     public float x_mouse;
 
     public MoveController Player;
-    public GameObject kay_text_set;
+    public GameObject key_text_set;
     public GameObject target;
 
     [Header("Player Synchronization")] 
@@ -40,23 +40,25 @@ public class CameraController : MonoBehaviour
         if (Physics.SphereCast(transform.position, 0.1f,
                 transform.forward, out hit, 5f))
         {
-            if (hit.collider.CompareTag("Kay"))
+            if (hit.collider.CompareTag("Key"))
             {
-                kay_text_set.SetActive(true);
+                key_text_set.SetActive(true);
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Player.Kay += 1;
-                    Debug.Log($"鍵取得　現在:{Player.Kay}個");
-                    if (Player.kay_text != null)
-                        Player.kay_text.text = "" + Player.Kay + "/1";
+                    Player.Key += 1;
+                    Debug.Log($"鍵取得　現在:{Player.Key}個");
+                    if (Player.keyUI != null)
+                        Player.keyUI.text = "" + Player.Key + "/1";
                     Destroy(hit.collider.gameObject);
-                    kay_text_set.SetActive(false);
+                    key_text_set.SetActive(false);
                     
                 }
             }
-            else kay_text_set.SetActive(false);
+            else 
+                key_text_set.SetActive(false);
         }
-        else kay_text_set.SetActive(false);
+        else 
+            key_text_set.SetActive(false);
         
         Debug.DrawRay(transform.position, transform.forward * 5f, Color.blue);
     }

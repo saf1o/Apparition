@@ -8,6 +8,10 @@ public class ZombieController : MonoBehaviour
     [SerializeField] private float searchAngle = 230f;
     [SerializeField] private Vector3 _forward = Vector3.forward;
     
+    [Header("Speed Settings")]
+    [SerializeField] private float normalSpeed = 0.02f;
+    [SerializeField] private float chaseSpeed = 0.04f;
+    
     private Animator animator;
     public GameObject player;
     private NavMeshAgent agent;
@@ -22,9 +26,11 @@ public class ZombieController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
-        
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(points[0].position);
+        agent.speed = normalSpeed;
+        
+        if (points.Length > 0)
+            GotoNextPoint();
     }
 
     void FixedUpdate()
@@ -35,25 +41,30 @@ public class ZombieController : MonoBehaviour
         
         if (distance < 1.0) animator.SetTrigger("Attack");
 
-        if (search == true)
+        if (search)
         {
+            // 追跡
             animator.SetBool("Run", true);
-            transform.position += transform.forward * 0.07f;
-            
-            var dir =  player.transform.position - this. transform.position;
-            // ターゲット方向へ回転
-            var lookAtRotation = Quaternion.LookRotation(dir, Vector3.up);
-            // 回転補正
-            var offsetRotation = Quaternion.LookRotation(_forward, Vector3.forward);
-
-            transform.rotation = lookAtRotation * offsetRotation * Quaternion.Euler(0, 90, 0);
-            animator.SetBool("Move", false);
-            this.transform.LookAt(player.transform);
+            agent.speed = chaseSpeed;
+            agent.SetDestination(player.transform.position);
+            // transform.position += transform.forward * 0.07f;
+            //
+            // var dir =  player.transform.position - this. transform.position;
+            // // ターゲット方向へ回転
+            // var lookAtRotation = Quaternion.LookRotation(dir, Vector3.up);
+            // // 回転補正
+            // var offsetRotation = Quaternion.LookRotation(_forward, Vector3.forward);
+            //
+            // transform.rotation = lookAtRotation * offsetRotation * Quaternion.Euler(0, 90, 0);
+            // animator.SetBool("Move", false);
+            // this.transform.LookAt(player.transform);
         }
         else
         {
+            // 巡回
             animator.SetBool("Run", false);
-            transform.position += transform.forward * 0.05f;
+            agent.speed = normalSpeed;
+            // transform.position += transform.forward * 0.05f;
             
             // 目的地到着→次の目的地
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -63,7 +74,7 @@ public class ZombieController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             var playerDirection  = other.transform.position - transform.position; 
             var angle = Vector3.Angle(transform.forward, playerDirection);
@@ -71,7 +82,6 @@ public class ZombieController : MonoBehaviour
             if (angle > searchAngle)
             {
                 Debug.Log("Player発見");
-                
                 search = true;
             }
         }
@@ -96,12 +106,12 @@ public class ZombieController : MonoBehaviour
     void GotoNextPoint()
     {
         // 地点未設定時に返す
-        if (points.Length == 0)
-            return;
+        if (points.Length == 0) return;
         // 目標地点へ
         agent.destination = points[destPoint].position;
         // 配列内　目標地点設定　出発地点へ
         destPoint = (destPoint + 1) % points.Length;
-        agent.SetDestination(points[destPoint].position);
+        
+        // agent.SetDestination(points[destPoint].position);
     }
 }

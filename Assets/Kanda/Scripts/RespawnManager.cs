@@ -58,7 +58,7 @@ public class RespawnManager : MonoBehaviour
         SetPlayerSpawnPosition();
     }
 
-    public void RespownAtPosition(Vector3 position, Vector3 rotation)
+    public void RespawnAtPosition(Vector3 position, Vector3 rotation)
     {
         spawnPosition = position;
         spawnRotation = rotation;

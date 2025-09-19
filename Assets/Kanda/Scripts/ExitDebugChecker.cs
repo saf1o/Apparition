@@ -43,7 +43,7 @@ public class ExitDebugChecker : MonoBehaviour
             
             MoveController moveController = other.GetComponent<MoveController>();
             if (moveController != null)
-                Debug.Log($"MoveController発見　Kay数: {moveController.Kay}");
+                Debug.Log($"MoveController発見　Key数: {moveController.Key}");
 
             else
                 Debug.Log("MoveControllerが見つかりません");
@@ -55,7 +55,7 @@ public class ExitDebugChecker : MonoBehaviour
         var controller = other.GetComponent<MoveController>();
         if (showDebugLogs && controller!= null)
         {
-            Debug.Log($"プレイヤー滞在中 - Kay: {controller.Kay}, E押下チャック中");
+            Debug.Log($"プレイヤー滞在中 - Key: {controller.Key}, E押下チャック中");
 
             if (Input.GetKeyDown(KeyCode.E))
                 Debug.Log("Eキーが押されました");

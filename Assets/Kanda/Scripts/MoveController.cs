@@ -13,8 +13,8 @@ public class MoveController : MonoBehaviour
     public float stamina;
     public Slider stamina_slider;
     public bool GameOver;
-    public int Kay;
-    public TextMeshProUGUI kay_text;
+    public int Key;
+    public TextMeshProUGUI keyUI;
     
     private Animator animator;
     private GameObject camera;
@@ -88,7 +88,7 @@ public class MoveController : MonoBehaviour
         if (GameOver == true)
             SceneManager.LoadScene("GameOver");
 
-        kay_text.text = "" + Kay + "/1";
+        keyUI.text = "" + Key + "/1";
     }
 
     void OnCollisionEnter(Collision collision)
