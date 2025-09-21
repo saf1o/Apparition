@@ -47,6 +47,7 @@ public class MoveController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 transform.position += transform.forward * 0.02f;
+                transform.position += transform.forward * (speed * Time.deltaTime);
                 stamina = stamina - (Time.deltaTime * 10);
             }
             else transform.position += transform.forward * 0.01f;
