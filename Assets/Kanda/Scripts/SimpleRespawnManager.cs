@@ -11,8 +11,8 @@ public class SimpleRespawnManager : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("SimpleRespawnManager開始");
-        Debug.Log($"設定されたリスポーン位置: {spawnPosition}");
+        // Debug.Log("SimpleRespawnManager開始");
+        // Debug.Log($"設定されたリスポーン位置: {spawnPosition}");
         
         // 複数のタイミングでリスポーン処理を試行
         Invoke("DoRespawn", 0.1f);
@@ -22,7 +22,7 @@ public class SimpleRespawnManager : MonoBehaviour
     
     private void DoRespawn()
     {
-        Debug.Log($"リスポーン処理実行 (時間: {Time.time})");
+        // Debug.Log($"リスポーン処理実行 (時間: {Time.time})");
         
         // DontDestroyOnLoadのプレイヤーを探す
         MoveController[] allControllers = FindObjectsOfType<MoveController>();
@@ -32,13 +32,13 @@ public class SimpleRespawnManager : MonoBehaviour
         
         foreach (MoveController controller in allControllers)
         {
-            Debug.Log($"MoveController発見: {controller.gameObject.name} at {controller.transform.position}");
+            // Debug.Log($"MoveController発見: {controller.gameObject.name} at {controller.transform.position}");
             
             // DontDestroyOnLoadオブジェクトを優先
             if (controller.gameObject.scene.name == "DontDestroyOnLoad")
             {
                 targetController = controller;
-                Debug.Log("DontDestroyOnLoadのプレイヤーを選択");
+                // Debug.Log("DontDestroyOnLoadのプレイヤーを選択");
                 break;
             }
             else if (targetController == null)
@@ -51,16 +51,16 @@ public class SimpleRespawnManager : MonoBehaviour
         {
             GameObject player = targetController.gameObject;
             
-            Debug.Log($"対象プレイヤー: {player.name}");
-            Debug.Log($"移動前位置: {player.transform.position}");
-            Debug.Log($"移動前回転: {player.transform.eulerAngles}");
+            // Debug.Log($"対象プレイヤー: {player.name}");
+            // Debug.Log($"移動前位置: {player.transform.position}");
+            // Debug.Log($"移動前回転: {player.transform.eulerAngles}");
             
             // 強制的に位置をリセット
             player.transform.position = spawnPosition;
             player.transform.eulerAngles = spawnRotation;
             
-            Debug.Log($"移動後位置: {player.transform.position}");
-            Debug.Log($"移動後回転: {player.transform.eulerAngles}");
+            // Debug.Log($"移動後位置: {player.transform.position}");
+            // Debug.Log($"移動後回転: {player.transform.eulerAngles}");
             
             // Rigidbodyがあればリセット
             Rigidbody rb = player.GetComponent<Rigidbody>();
@@ -68,7 +68,7 @@ public class SimpleRespawnManager : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
-                Debug.Log("Rigidbody速度リセット");
+                // Debug.Log("Rigidbody速度リセット");
             }
             
             // CharacterControllerがあればリセット
@@ -78,20 +78,20 @@ public class SimpleRespawnManager : MonoBehaviour
                 cc.enabled = false;
                 player.transform.position = spawnPosition;
                 cc.enabled = true;
-                Debug.Log("CharacterController経由でリセット");
+                // Debug.Log("CharacterController経由でリセット");
             }
             
             // カメラリセット
             ResetPlayerCamera(player);
             
-            Debug.Log("✅ リスポーン完了");
+            // Debug.Log("✅ リスポーン完了");
             
             // 結果確認
             StartCoroutine(VerifyRespawn(player));
         }
         else
         {
-            Debug.LogError("❌ MoveControllerが見つかりません！");
+            // Debug.LogError("❌ MoveControllerが見つかりません！");
         }
     }
     
@@ -100,24 +100,24 @@ public class SimpleRespawnManager : MonoBehaviour
         Camera playerCamera = player.GetComponentInChildren<Camera>();
         if (playerCamera != null)
         {
-            Debug.Log("カメラ発見、リセット実行");
+            // Debug.Log("カメラ発見、リセット実行");
             
             CameraController camController = playerCamera.GetComponent<CameraController>();
             if (camController != null)
             {
                 camController.ResetCameraRotation();
-                Debug.Log("CameraController経由でリセット");
+                // Debug.Log("CameraController経由でリセット");
             }
             else
             {
                 // 直接リセット
                 playerCamera.transform.localRotation = Quaternion.identity;
-                Debug.Log("直接カメラ回転リセット");
+                // Debug.Log("直接カメラ回転リセット");
             }
         }
         else
         {
-            Debug.LogWarning("プレイヤーカメラが見つかりません");
+            // Debug.LogWarning("プレイヤーカメラが見つかりません");
         }
     }
     
@@ -125,14 +125,14 @@ public class SimpleRespawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         
-        Debug.Log("=== リスポーン結果確認 ===");
-        Debug.Log($"最終位置: {player.transform.position}");
-        Debug.Log($"目標位置: {spawnPosition}");
-        Debug.Log($"距離差: {Vector3.Distance(player.transform.position, spawnPosition)}");
+        // Debug.Log("=== リスポーン結果確認 ===");
+        // Debug.Log($"最終位置: {player.transform.position}");
+        // Debug.Log($"目標位置: {spawnPosition}");
+        // Debug.Log($"距離差: {Vector3.Distance(player.transform.position, spawnPosition)}");
         
         if (Vector3.Distance(player.transform.position, spawnPosition) > 0.5f)
         {
-            Debug.LogWarning("⚠️ リスポーン位置が目標と異なります！再試行...");
+            // Debug.LogWarning("⚠️ リスポーン位置が目標と異なります！再試行...");
             player.transform.position = spawnPosition;
         }
     }
@@ -142,7 +142,7 @@ public class SimpleRespawnManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("Rキーで手動リスポーン");
+            // Debug.Log("Rキーで手動リスポーン");
             DoRespawn();
         }
     }

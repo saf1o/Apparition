@@ -31,7 +31,7 @@ public class RespawnManager : MonoBehaviour
         {
             player.transform.position = spawnPosition;
             player.transform.eulerAngles = spawnRotation;
-            Debug.Log($"プレイヤーをリスポーン地点に配置:{spawnPosition}");
+            // Debug.Log($"プレイヤーをリスポーン地点に配置:{spawnPosition}");
         }
         ResetCameraRotation();
     }
@@ -44,7 +44,7 @@ public class RespawnManager : MonoBehaviour
             if (cameraController != null)
             {
                 cameraController.ResetCameraRotation();
-                Debug.Log("カメラの回転をリセット");
+                // Debug.Log("カメラの回転をリセット");
             }
             else
             {
