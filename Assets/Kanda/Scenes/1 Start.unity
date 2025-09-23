@@ -575,6 +575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1129298417}
   - component: {fileID: 1129298416}
+  - component: {fileID: 1129298418}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -610,6 +611,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1129298418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129298415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d5ee56319f7cd4797e85459b8126ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideCursorInGame: 1
+  lockCursorInGame: 1
+  gameScenes:
+  - 3 InGame
+  - 4 Outside
+  menuScenes:
+  - 1 Start
+  - 2 Story
+  - 5 BusClear
 --- !u!1 &1301717220
 GameObject:
   m_ObjectHideFlags: 0
